@@ -2,25 +2,42 @@
 // GIVEN I am taking a code quiz
 // global variables
 //timer element
-var timerEl =document.getElementById('countdown')
+const startQuizBtn = document.querySelector("#start");
+const highscoreBtn = document.getElementById("highScores");
+var timerEl = document.getElementById('countdown');
 var correctEl = document.querySelector("#correct");
-var decrementEl = document.querySelector("#decrement");
 var countEl = document.querySelector("#count");
-// array of questions
-var qs = []
+var startEl = document.getElementById('start');
+var qnum = 0;
 var timeLeft = 60;
-usr = {
+var highscore = [usr];
+var usr = {
     name: '',
     score: 0
+};
+// array of questions
+const qs = [{
+    //the question
+    question: "My Dogs name is:",
+    //the possible answers to the question
+    Choices: ["Steve", "Sophia", "Sophie"],
+    //the correct answer to the question
+    Correct: "Sophie"
+},
+{
+    question: "My name is:",
+    Choices: ["Nicco", "Steve"],
+    Correct: "Nicco"
+},
+{
+    question: "My Cats name is:",
+    Choices: ["You don't have a cat", "Laura"],
+    Correct: "You don't have a cat",
 }
+];
 
-// WHEN I click the start button
-
-// THEN a timer starts and I am presented with a question
 //timer function
 function countdown() {
-    
-
     // Use the `setInterval()` method to call a function to be executed every 1000 milliseconds
     var timeInterval = setInterval(function () {
         // As long as the `timeLeft` is greater than 1
@@ -43,45 +60,51 @@ function countdown() {
         }
     }, 1000);
 }
-function userinfo(){
-//new usr object name property=textboxname.content 
-//usr object score = timeLeft when q array index = array -1
+
+function userinfo() {
+    //new usr object name property=textboxname.content 
+    //usr object score = timeLeft when q array index = array -1
 }
-function displayMessage(){
+function displayMessage() {
     timerEl.textContent = timeLeft
 }
-//  Select increment and decrement button elements
-
-
-// Updates count on page
-// Attach event listener to buttons with Correct answer class element
-correctEl.addEventListener("click", function () {
-    timeLeft=timeLeft+5;
-    displayMessage();
-});
-
-// Attach event listener to wrong answer class button element
-decrementEl.addEventListener("click", function () {
-    // Action will fire if timeLeft is greater than  0
-    if (timeLeft > 0) {
-        timeLeft=timeLeft-5;
-        displayMessage();
-    }
-});
-
-
-countdown();
-//event listener for start button
-function begin(){
+function qEl (){
 
 }
-//event listener for correct and incorrect answers by class?
+// dynamically generate event listener
+//create button
 
-// WHEN I answer a question
-// THEN I am presented with another question
-// WHEN I answer a question incorrectly
-// THEN time is subtracted from the clock
-// WHEN all questions are answered or the timer reaches 0
-// THEN the game is over
-// WHEN the game is over
-// THEN I can save my initials and my score
+//fill button inner text with possible answers
+//
+
+function highscoreuser(usr) {
+    usr.name = Uname.value.trim(),
+        usr.score = timeLeft
+}
+
+
+
+//event listener for start button
+function beginQuiz() {
+    startEl.addEventListener("click", function()) {
+        //hide start screen and move to questions
+
+    }
+    //populate question and answer divs while the number of qs cycled is less than the number of qs in the qs array
+    if (qnum < qs.length - 1) {
+        //get next question object and put it in the questions div and answers div
+        qnum++;
+    } else {
+        endQuiz();
+    }
+
+
+}
+
+function endQuiz() {
+
+    //hide question and answer divs
+    //show hight score div and call high scoore function
+}
+beginQuiz();
+countdown();

@@ -1,0 +1,25 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Courier New', Courier, monospace;
+}
+body{
+    background-color: darkblue;
+}
+#splash-screen, #highscores{
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+}
+button {
+    border:none;
+    outline: none;
+    cursor: pointer;
+}
+#restart {
+
+}
+
+.hide{display: none;}

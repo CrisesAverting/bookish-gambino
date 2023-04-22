@@ -5,19 +5,25 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Life Quiz</title>
+    <title>Life of Quiz</title>
     <link rel="stylesheet" href="./assets/css/style.css" />
 </head>
 
 <body>
     <div class="container">
-        <h1 class="Quiz">Life Quiz</h1>
-        <h2 id="countdown"></h2>
-        <p id="main"></p>
-            <div class="card-contents">
-                <button id="incorrect">Wrong answer</button>
-                <button id="correct">Correct answer</button>
-            </div>
+        <article id="splash-screen" class="hide">
+            <button id="start">Start</buttonid>
+        </article>
+
+        <article id="choices">
+        </article>
+        <article id="highScores" class="hide">
+            <form>
+                <label id="userScore">your score is</label>
+                <input id="intials">
+            </form>
+            <button id="restart">Restart</button>
+        </article>
     </div>
     <script src="./assets/js/script.js"></script>
 </body>
