@@ -3,6 +3,7 @@
 // global variables
 //timer element
 const startQuizBtn = document.querySelector("#start");
+const restartQuizBtn = document.querySelector("#restart");
 const highscoreBtn = document.getElementById("show-highscores");
 var countEl = document.getElementsByClassName("container");
 let currentQuestion;
@@ -10,16 +11,18 @@ let answer;
 var highscoreEl = document.getElementById("highScores")
 var timerEl = document.getElementById('countdown');
 var verdEl = document.getElementById('verdict');
-var startEl = document.getElementById('start');
+var startEl = document.getElementById('splash-screen');
 var qEl = document.getElementById("options");
+var gameoverEl = document.getElementById("gameOver");
 var qnum = 0;
 var timeLeft = 60;
 let timeInterval;
-var usr = {
-    name: '',
-    score: 0
-};
-var highscore = [usr];
+let highScores = [];
+// var usr = {
+//     name: '',
+//     score: 0
+// };
+//var highscore = [usr];
 // array of questions
 const questionList = [{
     //the question
@@ -42,6 +45,7 @@ const questionList = [{
 ];
 startQuizBtn.addEventListener("click", beginQuiz);
 highscoreBtn.addEventListener("click", highscoreboard);
+restartQuizBtn.addEventListener("click", restartQuiz);
 //timer function
 function timer() {
     // Use the `setInterval()` method to call a function to be executed every 1000 milliseconds
@@ -90,6 +94,7 @@ function populateQuestions() {
         qEl.append(curqTitle)
         //create a div to seperate the choices from the question for css purposes
         let choiceDiv = document.createElement("div");
+        choiceDiv.setAttribute("class", "cln");
         curqTitle.append(choiceDiv);
         //iterate though the questions while the index of the current question is less than the length of the choices array for the current question
         for (let i = 0; i < currentQuestion.Choices.length; i++) {
@@ -101,7 +106,6 @@ function populateQuestions() {
                 e.preventDefault();
                 checkAnswer(answer, this.innerText)
             })
-
             //add event listen for each button with event.target.innertext reads the inner text of the button that is clicked  
             document.getElementById("options").classList.add("show")
         }
@@ -112,55 +116,95 @@ function populateQuestions() {
         } else {
             verdEl.textContent = 'Incorrect ';
             if (timeLeft < 5) {
-                timeLeft = 0;
+                timerEl.textContent = "";
 
             } else {
                 timeLeft = timeLeft - 5;
-
             }
         }
         qnum++;
-        setTimeout(populateQuestions, 1000);
+        setTimeout(populateQuestions, 500);
     }
 }
 
-function highscoreboard() {
-
-console.log("showing leaderboard");
-//remove all element in options article
-//hide countdown element
-}
 
 
-
-//event listener for start button
-function beginQuiz(e) {
+function beginQuiz() {
+    qnum = 0;
+    timeLeft = 60;
+    restartQuizBtn.classList.add("hide")
     //hide start screen and move to questions
-    e.preventDefault();
-    document.getElementById("splash-screen").classList.add("hide")
+    // e.preventDefault();
+    startEl.classList.add("hide");
+    highscoreEl.classList.add("hide");
     timer();
     console.log("starting your quiz dave")
     populateQuestions();
 }
+function restartQuiz() {
+    // evnt.preventDefault()
+    // highscoreEl.classList.add("hide")
+    beginQuiz()
+    }
+
 
 function endQuiz() {
     var scr = timeLeft;
-    timeLeft = 0;
+    // clear timer element from screen
+    timerEl.textContent = "";
+    clearInterval(timeInterval)
+    gameoverEl.classList.replace("hide", "show");
     let initialsEntry = document.createElement("INPUT");
+    let okBtn = document.createElement("button");
+    okBtn.innerText = "Confirm Entry";
+    okBtn.addEventListener("click", function (event) {
+        event.preventDefault();
+        initials = initialsEntry.value
+        console.log(initials)
+        if (initials == "") {
+            alert("please enter your intials")
+        }
+        else {
+            alert("Your score is " + scr + "\n" + "Your initials are " + initials);
+            const usr = {
+                initials: initials,
+                score: scr,
+            };
+            highScores.push(usr)
+            localStorage.setItem("storedScores", JSON.stringify(highScores));
+        }
+        gameoverEl.innerHTML = "";
+        highscoreboard()
+    })
     initialsEntry.setAttribute("type", "text");
-    highscoreEl.append(initialsEntry);
-
-    let initials = initialsEntry.innerText;
-
-    // if (initials.innerText === "") {
-    //     alert("please enter your initials");
-    // } else if (timeLeft == 0) {
-    //     alert("badluck you ran out of time");
-    // } else {
-    //     alert("Good Job" + "Your Score is : " + scr);
-
-    //     localStorage.setItem("email", email);
-    //     localStorage.setItem("score", timeLeft);
-    //     highscoreboard();
-    // }
+    scoreEl = document.createElement("p");
+    scoreEl.innerText = scr;
+    gameoverEl.append(
+        scoreEl,
+        initialsEntry,
+        okBtn
+    );
+}
+function highscoreboard() {
+    highscoreEl.classList.remove("hide");
+    highscoreEl.innerHTML = ""
+    restartQuizBtn.classList.remove("hide");
+    if (highScores.length == 0) {
+        alert("No Highscores Yet");
+        //document.getElementById("restart").remove("class","hide");
+    } else {
+        highScores= JSON.parse(localStorage.getItem("storedScores"));
+        highScores.sort((a,b) => b.score -a.score);
+        for (let x = 0; x < highScores.length; x++) {
+            var scoreP = document.createElement("p");
+            scoreP.innerText = highScores[x].score + " " + highScores[x].initials;
+            highscoreEl.append(scoreP);
+        }
+    }
+    console.log("showing leaderboard");
+    //remove all element in options article
+    qEl.innerHTML = "";
+    startEl.classList.add("hide");
+    //hide countdown element
+    clearInterval(timeInterval);
 }
