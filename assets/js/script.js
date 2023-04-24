@@ -3,20 +3,25 @@
 // global variables
 //timer element
 const startQuizBtn = document.querySelector("#start");
-const highscoreBtn = document.getElementById("highScores");
+const highscoreBtn = document.getElementById("show-highscores");
+var countEl = document.getElementsByClassName("container");
+let currentQuestion;
+let answer;
+var highscoreEl = document.getElementById("highScores")
 var timerEl = document.getElementById('countdown');
-var correctEl = document.querySelector("#correct");
-var countEl = document.querySelector("#count");
+var verdEl = document.getElementById('verdict');
 var startEl = document.getElementById('start');
+var qEl = document.getElementById("options");
 var qnum = 0;
 var timeLeft = 60;
-var highscore = [usr];
+let timeInterval;
 var usr = {
     name: '',
     score: 0
 };
+var highscore = [usr];
 // array of questions
-const qs = [{
+const questionList = [{
     //the question
     question: "My Dogs name is:",
     //the possible answers to the question
@@ -35,11 +40,12 @@ const qs = [{
     Correct: "You don't have a cat",
 }
 ];
-
+startQuizBtn.addEventListener("click", beginQuiz);
+highscoreBtn.addEventListener("click", highscoreboard);
 //timer function
-function countdown() {
+function timer() {
     // Use the `setInterval()` method to call a function to be executed every 1000 milliseconds
-    var timeInterval = setInterval(function () {
+    timeInterval = setInterval(function () {
         // As long as the `timeLeft` is greater than 1
         if (timeLeft > 1) {
             // Set the `textContent` of `timerEl` to show the remaining seconds
@@ -55,8 +61,6 @@ function countdown() {
             timerEl.textContent = 'Times up';
             // Use `clearInterval()` to stop the timer
             clearInterval(timeInterval);
-            // Call the `displayMessage()` function
-            // displayMessage();
         }
     }, 1000);
 }
@@ -68,43 +72,95 @@ function userinfo() {
 function displayMessage() {
     timerEl.textContent = timeLeft
 }
-function qEl (){
+function populateQuestions() {
+    //set the variable current question to the question object at index qnum in the questions list array
+    qEl.innerHTML = "";
+    verdEl.innerText = "";
+    if (qnum === questionList.length) {
+        endQuiz()
+    } else {
+        currentQuestion = questionList[qnum];
+        //set answer to the currentQuestion objects correct paramenter
+        answer = currentQuestion.Correct;
+        //create a new h2 element call curqTitle
+        let curqTitle = document.createElement("h2");
+        // set the curqTitle inner text to the question parament of the current question
+        curqTitle.innerText = currentQuestion.question;
+        //append the new element to the choices article
+        qEl.append(curqTitle)
+        //create a div to seperate the choices from the question for css purposes
+        let choiceDiv = document.createElement("div");
+        curqTitle.append(choiceDiv);
+        //iterate though the questions while the index of the current question is less than the length of the choices array for the current question
+        for (let i = 0; i < currentQuestion.Choices.length; i++) {
+            //create button choice button and set inner text of choice button to the index of i in the choices array for the current question
+            let chosenBtn = document.createElement("button");
+            chosenBtn.innerText = currentQuestion.Choices[i];
+            choiceDiv.append(chosenBtn);
+            chosenBtn.addEventListener("click", function (e) {
+                e.preventDefault();
+                checkAnswer(answer, this.innerText)
+            })
 
+            //add event listen for each button with event.target.innertext reads the inner text of the button that is clicked  
+            document.getElementById("options").classList.add("show")
+        }
+    }
+    function checkAnswer(a, b) {
+        if (a == b) {
+            verdEl.textContent = 'Correct ';
+        } else {
+            verdEl.textContent = 'Incorrect ';
+            if (timeLeft < 5) {
+                timeLeft = 0;
+
+            } else {
+                timeLeft = timeLeft - 5;
+
+            }
+        }
+        qnum++;
+        setTimeout(populateQuestions, 1000);
+    }
 }
-// dynamically generate event listener
-//create button
 
-//fill button inner text with possible answers
-//
+function highscoreboard() {
 
-function highscoreuser(usr) {
-    usr.name = Uname.value.trim(),
-        usr.score = timeLeft
+console.log("showing leaderboard");
+//remove all element in options article
+//hide countdown element
 }
 
 
 
 //event listener for start button
-function beginQuiz() {
-    startEl.addEventListener("click", function()) {
-        //hide start screen and move to questions
-
-    }
-    //populate question and answer divs while the number of qs cycled is less than the number of qs in the qs array
-    if (qnum < qs.length - 1) {
-        //get next question object and put it in the questions div and answers div
-        qnum++;
-    } else {
-        endQuiz();
-    }
-
-
+function beginQuiz(e) {
+    //hide start screen and move to questions
+    e.preventDefault();
+    document.getElementById("splash-screen").classList.add("hide")
+    timer();
+    console.log("starting your quiz dave")
+    populateQuestions();
 }
 
 function endQuiz() {
+    var scr = timeLeft;
+    timeLeft = 0;
+    let initialsEntry = document.createElement("INPUT");
+    initialsEntry.setAttribute("type", "text");
+    highscoreEl.append(initialsEntry);
 
-    //hide question and answer divs
-    //show hight score div and call high scoore function
+    let initials = initialsEntry.innerText;
+
+    // if (initials.innerText === "") {
+    //     alert("please enter your initials");
+    // } else if (timeLeft == 0) {
+    //     alert("badluck you ran out of time");
+    // } else {
+    //     alert("Good Job" + "Your Score is : " + scr);
+
+    //     localStorage.setItem("email", email);
+    //     localStorage.setItem("score", timeLeft);
+    //     highscoreboard();
+    // }
 }
-beginQuiz();
-countdown();

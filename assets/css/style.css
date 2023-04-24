@@ -5,9 +5,25 @@
     font-family: 'Courier New', Courier, monospace;
 }
 body{
-    background-color: darkblue;
+    background-color: rgb(0, 102, 139);
 }
-#splash-screen, #highscores{
+header{
+    width:auto;
+    display: flex;
+    justify-content: space-around;
+    margin: 25px;
+}
+article {
+    margin:0 auto;
+    max-width: 94%;
+}
+button {
+    
+}
+#verdict{
+    border: solid, black, 1px;
+}
+#highscores{
 display: flex;
 flex-direction: column;
 align-items: center;
@@ -19,7 +35,11 @@ button {
     cursor: pointer;
 }
 #restart {
-
+    border:1px solid black;
 }
-
-.hide{display: none;}
+.show{
+    display: contents;
+}
+.hide{
+    display: none;
+}

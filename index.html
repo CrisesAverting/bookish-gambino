@@ -10,19 +10,28 @@
 </head>
 
 <body>
+    <header>
+        <button id="show-highscores">Show leaderboard</button>
+    </header>
     <div class="container">
-        <article id="splash-screen" class="hide">
-            <button id="start">Start</buttonid>
+        <p id="countdown"></p>
+        <article id="splash-screen">
+            <h1>Quiz of Life</h1>
+            <p>Welcome to the Quiz of life. Hopefully by the end you'll have learned a of a few things that may help in
+                life. You have 60 seconds to complete the quiz. Press Start when ready. p.s. a wrong answer will lose
+                you 5 seconds. May the force be with you, life long and prosper.</p>
+            <button id="start">Start Quiz</buttonid>
         </article>
+        <article id="options">
 
-        <article id="choices">
+        </article>
+        <div>
+            <p id="verdict"></p>
+        </div>
+        <article id="gameOver" class="hide">
         </article>
         <article id="highScores" class="hide">
-            <form>
-                <label id="userScore">your score is</label>
-                <input id="intials">
-            </form>
-            <button id="restart">Restart</button>
+            <button id="restart" class="hide">Restart</button>
         </article>
     </div>
     <script src="./assets/js/script.js"></script>
