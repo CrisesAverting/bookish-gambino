@@ -18,29 +18,35 @@ var qnum = 0;
 var timeLeft = 60;
 let timeInterval;
 let highScores = [];
-// var usr = {
-//     name: '',
-//     score: 0
-// };
-//var highscore = [usr];
+
 // array of questions
 const questionList = [{
     //the question
-    question: "My Dogs name is:",
+    question: "What is my Dogs name:",
     //the possible answers to the question
     Choices: ["Steve", "Sophia", "Sophie"],
     //the correct answer to the question
     Correct: "Sophie"
 },
 {
-    question: "My name is:",
-    Choices: ["Nicco", "Steve"],
-    Correct: "Nicco"
+    question: "When driving manual or stick shift cars what pedal do you press while changing gear?",
+    Choices: ["Brake", "Clutch", "accelerator"],
+    Correct: "Clutch"
 },
 {
-    question: "My Cats name is:",
-    Choices: ["You don't have a cat", "Laura"],
-    Correct: "You don't have a cat",
+    question: "Pythagorean theorem is:",
+    Choices: ["one plus two plus three", "Steve", "fake", "a squared plus b squared equals c squared"],
+    Correct: "a squared plus b squared equals c squared"
+},
+{
+    question: "The meaning of life is:",
+    Choices: ["You don't have a cat", "Laura", "Steve", "42"],
+    Correct: "42",
+},
+{
+    question: "Live long and:",
+    Choices: ["Profit", "Prosper", "Steve", "Love"],
+    Correct: "Prosper",
 }
 ];
 startQuizBtn.addEventListener("click", beginQuiz);
@@ -63,6 +69,8 @@ function timer() {
         } else {
             // Once `timeLeft` gets to 0, set `timerEl` to a game over string
             timerEl.textContent = 'Times up';
+            
+            endQuiz();
             // Use `clearInterval()` to stop the timer
             clearInterval(timeInterval);
         }

@@ -14,7 +14,7 @@ JavaScript quiz webapp
 This is a javascript based example quiz
 
 ## Links
-
+https://crisesaverting.github.io/bookish-gambino/
 
 ## Purpose
 
@@ -22,7 +22,8 @@ This repository contains an example quiz using javascript
 
 ## Screenshots
 
-
+<img src="./assets/images/High score.png">
+<img src="./assets/images/Start.png">
 
 ## Technologies
 
