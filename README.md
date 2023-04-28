@@ -11,7 +11,7 @@ JavaScript quiz webapp
 * [Credits](#credits)
 ## Description
 
-This is a javascript based example quiz
+This is a javascript based example quiz with Highscore board using local storage
 
 ## Links
 https://crisesaverting.github.io/bookish-gambino/
@@ -22,8 +22,8 @@ This repository contains an example quiz using javascript
 
 ## Screenshots
 
-<img src="./assets/images/High score.png">
 <img src="./assets/images/Start.png">
+<img src="./assets/images/High score.png">
 
 ## Technologies
 
